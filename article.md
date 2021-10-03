@@ -153,7 +153,7 @@ In this command, you're telling Unicorn to create a `task` component inside the 
 
 The two files to take note of are the `task.py` and `task.html`, you will be editing both in the next section.
 
-### Adding and Deleting Tasks
+## Adding and Deleting Tasks
 
 In this section, you'll be implementing the functionality to add and delete tasks without refreshing your browser using `Unicorn`.
 
