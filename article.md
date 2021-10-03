@@ -207,7 +207,7 @@ Inside the `task.html`, update it with the following code:
 
 1. You are loading all tasks from your database inside this HTML file.
 1. `u:model` which is short for `unicorn:model` both are allowed, is what ties the input to the backend component. Therefore, the attribute passed into the `u:model` refers to a property in the component class.
-1. The `defer` modifier is used on the `u:model` attribute to prevent an AJAX call on every change.
+1. The `defer` modifier is used on the `u:model` attribute to prevent an AJAX call on every change (this can be beneficial).
 1. Take note of the `Add Tasks` button with an attribute `u:click`, which tells `unicorn` to bind the `add_tasks` backend method to the click browser event. It also has a `prevent` modifier, to prevent page reload after the form submission.
 1. Also, the `Delete Tasks` button tells `unicorn` to bind the `delete_tasks` backend method. You also passed the task `id` to the `delete_task` function to uniquely identify each book.
 
