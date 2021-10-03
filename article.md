@@ -48,7 +48,7 @@ Once done, navigate to [http://127.0.0.1:8080/](http://127.0.0.1:8080/) to ensur
 
 ![Home Page](https://github.com/Samuel-2626/reactive-django/blob/main/images/homepage-1.png)
 
-Take note of the `Task` model in _tasks/models.py_:
+Before proceeding, take note of the `Task` model in _tasks/models.py_ (the database model created under the `tasks` application):
 
 ```python
 from django.db import models
@@ -135,13 +135,13 @@ Update your tasks' template `index.html` file like so:
 **What's Happening Here?**
 
 1. You added the `{% load unicorn %}` tag to the top of your `index.html` template, this is required.
-1. You also added the `{% unicorn_scripts %}`, also required.
+2. You also added the `{% unicorn_scripts %}`, also required.
 
 > Note that to follow best practices of security in Django, Unicorn required a `CSRF_TOKEN` to be added on any page that has a component.
 
-1. You loaded your first Unicorn component called `task`.
+3. You loaded your first Unicorn component called `task`.
 
-> Unicorn uses `component` to provide additional interactivity to your Django application. A component has two parts, first the Django HTML template and second a view class for the backend code.
+> Unicorn uses `component` to provide additional interactivity to your Django application. A component has two parts, first the **Django HTML template** and second a **view class** for the backend code.
 
 To create this component called `task`, in your terminal run this code:
 
