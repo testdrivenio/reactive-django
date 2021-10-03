@@ -213,7 +213,7 @@ Inside the `task.html`, update it with the following code:
 
 > Unicorn requires that there must be one root element that surrounds the component template.
 
-Inside the `task.py`, update and add the following code:
+Inside the `task.py`, update it with the following code:
 
 ```py
 
