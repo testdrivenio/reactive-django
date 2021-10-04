@@ -69,7 +69,6 @@ class Task(models.Model):
 INSTALLED_APPS = [
     ...
     "django_unicorn", # new
-    ...
 ]
 ```
 
@@ -89,7 +88,6 @@ Update your project `urls.py` file by adding this additional path:
 ```py
 ...
 path("", views.index), # new
-...
 ```
 
 Update your tasks' application `views.py` file like so:
