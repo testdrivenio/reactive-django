@@ -84,7 +84,7 @@ path("unicorn/", include("django_unicorn.urls")), # new
 
 This section is for setting up your project URLs, Views and Templates.
 
-Update your project `urls.py` file like so:
+Update your project `urls.py` file by adding this additional path:
 
 ```py
 ...
@@ -135,7 +135,7 @@ Update your tasks' template `index.html` file like so:
 **What's Happening Here?**
 
 1. You added the `{% load unicorn %}` tag to the top of your `index.html` template, this is required.
-2. You also added the `{% unicorn_scripts %}`, also required.
+2. You also added the `{% unicorn_scripts %}` tag, also required.
 
 > Note that to follow best practices of security in Django, Unicorn required a `CSRF_TOKEN` to be added on any page that has a component.
 
@@ -209,7 +209,7 @@ Inside the `task.html`, update it with the following code:
 1. `u:model` which is short for `unicorn:model` both are allowed, is what ties the input to the backend component. Therefore, the attribute passed into the `u:model` refers to a property in the component class.
 1. The `defer` modifier is used on the `u:model` attribute to prevent an AJAX call on every change (this can be beneficial).
 1. Take note of the `Add Tasks` button with an attribute `u:click`, which tells `unicorn` to bind the `add_tasks` backend method to the click browser event. It also has a `prevent` modifier, to prevent page reload after the form submission.
-1. Also, the `Delete Tasks` button tells `unicorn` to bind the `delete_tasks` backend method. You also passed the task `id` to the `delete_task` function to uniquely identify each book.
+1. Also, the `Delete Tasks` button tells `unicorn` to bind the `delete_tasks` backend method. You also passed the task `id` to the `delete_task` function to uniquely identify each task.
 
 > Unicorn requires that there must be one root element that surrounds the component template.
 
