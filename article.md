@@ -136,7 +136,7 @@ Update your tasks' template `index.html` file:
 </html>
 ```
 
-**What's Happening Here?**
+### Explaining the Code
 
 1. You added the `{% load unicorn %}` tag to the top of your `index.html` template, this is required.
 2. You also added the `{% unicorn_scripts %}` tag, also required.
@@ -207,7 +207,7 @@ Inside the `task.html`, update it with the following code:
 </div>
 ```
 
-**What's Happening Here?**
+### Explaining the Code
 
 1. You are loading all tasks from your database inside this HTML file.
 1. `u:model` which is short for `unicorn:model` both are allowed, is what ties the input to the backend component. Therefore, the attribute passed into the `u:model` refers to a property in the component class.
@@ -248,7 +248,7 @@ class TaskView(UnicornView):
 
 ```
 
-**What's Happening Here?**
+### Explaining the Code
 
 1. You are importing the `UnicornView`, which subclasses the `TemplateView`. Therefore, to switch from a Django class-based should be quite simple.
 2. When the component is instantiated, the `hydrate` method is called to get the latest tasks from the database so that the information is up-to-date.
@@ -284,7 +284,7 @@ To update existing tasks, it would be nice to have a preview of the previous tas
 ...
 ```
 
-**What's Happening Here?**
+### Explaining the Code
 
 1. You added two buttons called `Update` and `Preview`.
 1. These buttons are bound to the backend function `update_task` and `preview_task`, with taking the task `id` as an attribute, to uniquely identify each task.
@@ -378,7 +378,7 @@ Don't forget the imports:
 from django.contrib import messages
 ```
 
-**What's Happening Here?**
+### Explaining the Code
 
 Once the `add_task` method is called and it's successful, inside the component a success message will be shown, as the message would be added to the request. The same also applies the the `delete_task` method.
 
@@ -406,7 +406,7 @@ Also, update the `Add Tasks` button like so:
 </button>
 ```
 
-**What's Happening Here?**
+### Explaining the Code
 
 Unicorn has the `unicorn:loading` attribute, which only is visible when an operation is in process. Here, a spinner would be shown whenever the `add_task` method is in action.
 
