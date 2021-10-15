@@ -320,6 +320,8 @@ def update_task(self, id):
 1. The `preview_task` method takes in the task `id`, then gets the task `title` and sets it to the `title` variable.
 1. The `update_task` method also takes in the task `id`, then gets the updated `title` from the `title` variable, and finally updates the task `title` model.
 
+Once done, navigate to [http://127.0.0.1:8080/](http://127.0.0.1:8080/) and try to preview and update some tasks.
+
 ## Improving the User Experience
 
 In this section, you'll be adding two functionalities to improve the application. The first is a success message on every task added to the DOM. Unicorn as support for using Django messages, in fact, they work the same.
@@ -407,6 +409,8 @@ Also, update the `Add Tasks` button like so:
 **What's Happening Here?**
 
 Unicorn has the `unicorn:loading` attribute, which only is visible when an operation is in process. Here, a spinner would be shown whenever the `add_task` method is in action.
+
+Once done, navigate to [http://127.0.0.1:8080/](http://127.0.0.1:8080/) and try to adding some tasks.
 
 ## Conclusion
 
