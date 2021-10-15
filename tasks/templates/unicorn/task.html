@@ -1,9 +1,21 @@
 <div class="row">
   <div class="col-md-6">
     <section>
+      <div unicorn:loading unicorn:target="AddKey">
+        <strong>adding</strong> 
+        <div class="spinner-border"></div>
+      </div>
+
         <ul class="list-group">
           {% for task in tasks %}
-            <li class="list-group-item mb-2">{{ task.title }} <button class="btn btn-outline-danger" style="float: right;" u:click="delete_task('{{ task.id }}')">Delete Tasks</button></li> 
+            <li class="list-group-item mb-2">{{ task.title }} 
+              <button class="btn btn-outline-danger btn-sm" style="float: right;" u:click="delete_task('{{ task.id }}')">Delete </button>
+              
+              <button class="btn btn-outline-warning btn-sm" style="float: right;" u:click="update_task('{{ task.id }}')">Update </button>
+              <button class="btn btn-outline-success btn-sm" style="float: right;" u:click="preview_task('{{ task.id }}')">Preview</button>
+            </li> 
+
+
           {% empty %}
             <p>All Tasks Completed 🎉</p>
           {% endfor %}
@@ -11,14 +23,34 @@
       </section>
   </div>
   <div class="col-md-6">
+    {% if messages %}
+
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <ul>
+          {% for message in messages %}
+          <li style="list-style-type: none;">{{message|safe}}</li>
+          {% endfor %}
+        </ul>
+        
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+ 
+  
+    {% endif %}
     <form>
         <br>
       <input type="text" class="form-control" placeholder="Enter task to perform..." u:model.defer="title">
       <br>
-      <button class="btn btn-secondary" style="min-width: 100%;" u:click.prevent="add_task">Add Tasks</button>
+      <button class="btn btn-secondary" style="min-width: 100%;" u:click.prevent="add_task" unicorn:key="AddKey">Add Tasks</button>
+
     </form>
     
+    
+    
   </div>
+
+  
 </div>
 
 

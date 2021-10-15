@@ -2,7 +2,7 @@
 
 Developing [Single Page Applications](https://en.wikipedia.org/wiki/Single-page_application) (SPAs) are very popular in recent times with the rise of dedicated frontend frameworks like [React](https://reactjs.org/), [Vue.js](https://vuejs.org/) among others. In fact, in most cases, Django is being used as a REST API backend consumed by a dedicated frontend. However, some functionalities that this frontend framework gives like DOM manipulation without a refresh of the entire page could be made possible in Django. Technologies like [Unicorn](https://www.django-unicorn.com/docs/) which you'll learn in this tutorial helps you achieve this functionality. Therefore, you can still take advantage of the amazing things Django offers and at the same time add reactivity to your Django application.
 
-There are several benefits to using Unicorn as it saves you the time of learning a dedicated frontend framework as great SEO support since it is Django under the hood. It also works seamlessly with Django and is very easy to install.
+There are several benefits to using Unicorn as it saves you the time of learning a dedicated frontend framework, as great SEO support since it is Django under the hood. It also works seamlessly with Django and is very easy to install.
 
 According to [Unicorn](https://www.django-unicorn.com/docs/), how it works is that it makes AJAX calls in the background, and dynamically updates the DOM. In this tutorial, you'll learn how to work with Unicorn and build a full-stack reactive website in Django with no JavaScript.
 
@@ -19,7 +19,7 @@ Here's a quick look at the app you'll be building:
 
 ![Home Page](https://github.com/Samuel-2626/reactive-django/blob/main/images/homepage-2.png)
 
-You can add a new task, and delete a new task without refreshing the page, the same functionality that would be possible with Single Page Applications (SPAs).
+You can perform CRUD operations like adding, previewing, updating and deleting a task without refreshing the page, the same functionality that would be possible with Single Page Applications (SPAs).
 
 Clone down the [base](https://github.com/Samuel-2626/reactive-django/tree/base) branch from the [reactive-django](https://github.com/Samuel-2626/reactive-django) repo:
 
@@ -63,7 +63,7 @@ class Task(models.Model):
 
 ## Getting Started with Unicorn
 
-**Unicorn** has been installed as part of the dependencies under the section _project setup and overview_. However, to use Unicorn in your Django project, add it to your `INSTALLED_APPS` like so:
+**Unicorn** has been installed as part of the dependencies under the section _project setup and overview_. However, to use Unicorn in your Django project, add it to your `INSTALLED_APPS`:
 
 ```py
 INSTALLED_APPS = [
@@ -72,7 +72,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-Next, update your project `urls.py` file like so:
+Next, update your project `urls.py` file:
 
 ```py
 from django.urls import path, include
@@ -90,14 +90,14 @@ Update your project `urls.py` file by adding this additional path:
 path("", views.index), # new
 ```
 
-Update your tasks' application `views.py` file like so:
+Update your tasks' application `views.py` file:
 
 ```py
 def index(request):
     return render(request, "index.html", {})
 ```
 
-Update your tasks' template `index.html` file like so:
+Update your tasks' template `index.html` file:
 
 ```html
 {% load unicorn %}
@@ -126,6 +126,12 @@ Update your tasks' template `index.html` file like so:
 
 			{% unicorn 'task' %}
 		</div>
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+			crossorigin="anonymous"
+		></script>
 	</body>
 </html>
 ```
@@ -139,7 +145,7 @@ Update your tasks' template `index.html` file like so:
 
 3. You loaded your first Unicorn component called `task`.
 
-> Unicorn uses `component` to provide additional interactivity to your Django application. A component has two parts, first the **Django HTML template** and second a **view class** for the backend code.
+> Unicorn uses `component` to provide additional interactivity to your Django application. A component has two parts, first the **Django HTML template** and second, a **view class** for the backend code.
 
 To create this component called `task`, in your terminal run this code:
 
@@ -166,11 +172,11 @@ Inside the `task.html`, update it with the following code:
 				<li class="list-group-item mb-2">
 					{{ task.title }}
 					<button
-						class="btn btn-outline-danger"
+						class="btn btn-outline-danger btn-sm"
 						style="float: right;"
 						u:click="delete_task('{{ task.id }}')"
 					>
-						Delete Tasks
+						Delete
 					</button>
 				</li>
 				{% empty %}
@@ -254,6 +260,153 @@ Once done, navigate to [http://127.0.0.1:8080/](http://127.0.0.1:8080/) to ensur
 ![Home Page](https://github.com/Samuel-2626/reactive-django/blob/main/images/homepage-2.png)
 
 Try adding and deleting some tasks.
+
+## Previewing and Updating Tasks
+
+To update existing tasks, it would be nice to be able to have a preview without having to type the exact task again. To achieve this, update the `task.html` with the following code, just after the delete button:
+
+```html
+...
+<button
+	class="btn btn-outline-warning btn-sm"
+	style="float: right;"
+	u:click="update_task('{{ task.id }}')"
+>
+	Update
+</button>
+<button
+	class="btn btn-outline-success btn-sm"
+	style="float: right;"
+	u:click="preview_task('{{ task.id }}')"
+>
+	Preview
+</button>
+...
+```
+
+**What's Happening Here?**
+
+1. You added two buttons called `Update` and `Preview`.
+1. These buttons are bound to the backend function `update_task` and `preview_task`, while taking the task `id` as an attribute, to uniquely identify each task.
+
+Also, inside the `task.py`, update it with the following code, after the delete function:
+
+```py
+...
+def preview_task(self, id):
+    try:
+        task = Task.objects.get(id=id)
+        self.title = task.title
+
+    except:
+        pass
+
+def update_task(self, id):
+    try:
+        task = Task.objects.get(id=id)
+
+        task.title = self.title
+
+        task.save()
+
+        self.title = ""
+
+    except:
+        pass
+```
+
+### Explaining the Functions
+
+1. The `preview_task` method takes in the task `id`, then gets the task `title` and sets it to the `title` variable.
+1. The `update_task` method also takes in the task `id`, then gets the updated `title` from the `title` variable, and finally updates the task `title` model.
+
+## Improving the User Experience
+
+In this section, you'll be adding two functionalities to improve the application. The first is a success message on every task added to the DOM. Unicorn as support for using Django messages, in other words, they work the same.
+
+Update the `task.html` with the following code, just before the beginning of the form that contains the `Add Task` button:
+
+```html
+{% if messages %}
+
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+	<ul>
+		{% for message in messages %}
+		<li style="list-style-type: none;">{{message|safe}}</li>
+		{% endfor %}
+	</ul>
+
+	<button
+		type="button"
+		class="btn-close"
+		data-bs-dismiss="alert"
+		aria-label="Close"
+	></button>
+</div>
+{% endif %}
+```
+
+Also, inside the `task.py`, update the `add_task` and `delete_task` like so:
+
+```py
+...
+def add_task(self):
+        if self.title != "":
+            task = Task(title=self.title)
+            task.save()
+
+        self.title = ""
+
+        messages.success(self.request, f"Successfully Added: {task.title}")
+
+def delete_task(self, id):
+        try:
+            task = Task.objects.get(id=id)
+            task.delete()
+            messages.success(
+                self.request, f"Successfully Deleted: {task.title}")
+        except:
+            pass
+...
+```
+
+Don't forget the imports:
+
+```py
+from django.contrib import messages
+```
+
+**What's Happening Here?**
+
+Once the `add_task` method is called and it's successful, inside the component a success message will be shown, as the message would be added to the request. The same also applies the the `delete_task` method.
+
+The second functionality entails adding a message while the Unicorn performs the AJAX requests and before the DOM is updated. It can also refer to as `loading states`.
+
+Therefore, Update the `task.html` with the following code, just before the `ul` tag that loads all `tasks`:
+
+```html
+<div unicorn:loading unicorn:target="AddKey">
+	<strong>adding</strong>
+	<div class="spinner-border"></div>
+</div>
+```
+
+Also, update the `Add Tasks` button like so:
+
+```html
+<button
+	class="btn btn-secondary"
+	style="min-width: 100%;"
+	u:click.prevent="add_task"
+	unicorn:key="AddKey"
+>
+	Add Tasks
+</button>
+```
+
+**What's Happening Here?**
+
+Unicorn as the `unicorn:loading` attribute, which only is visible when an operation is in process. Here, a spinner would be shown whenever the `add_task` method is in action.
 
 ## Conclusion
 
