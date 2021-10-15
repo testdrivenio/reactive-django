@@ -263,7 +263,7 @@ Try adding and deleting some tasks.
 
 ## Previewing and Updating Tasks
 
-To update existing tasks, it would be nice to be able to have a preview without having to type the exact task again. To achieve this, update the `task.html` with the following code, just after the delete button:
+To update existing tasks, it would be nice to have a preview of the previous task without typing the exact task again. To achieve this, update the `task.html` with the following code, just after the delete button:
 
 ```html
 ...
@@ -287,7 +287,7 @@ To update existing tasks, it would be nice to be able to have a preview without 
 **What's Happening Here?**
 
 1. You added two buttons called `Update` and `Preview`.
-1. These buttons are bound to the backend function `update_task` and `preview_task`, while taking the task `id` as an attribute, to uniquely identify each task.
+1. These buttons are bound to the backend function `update_task` and `preview_task`, with taking the task `id` as an attribute, to uniquely identify each task.
 
 Also, inside the `task.py`, update it with the following code, after the delete function:
 
@@ -322,7 +322,7 @@ def update_task(self, id):
 
 ## Improving the User Experience
 
-In this section, you'll be adding two functionalities to improve the application. The first is a success message on every task added to the DOM. Unicorn as support for using Django messages, in other words, they work the same.
+In this section, you'll be adding two functionalities to improve the application. The first is a success message on every task added to the DOM. Unicorn as support for using Django messages, in fact, they work the same.
 
 Update the `task.html` with the following code, just before the beginning of the form that contains the `Add Task` button:
 
@@ -380,7 +380,7 @@ from django.contrib import messages
 
 Once the `add_task` method is called and it's successful, inside the component a success message will be shown, as the message would be added to the request. The same also applies the the `delete_task` method.
 
-The second functionality entails adding a message while the Unicorn performs the AJAX requests and before the DOM is updated. It can also refer to as `loading states`.
+The second functionality entails adding a message while the Unicorn performs the AJAX requests and before the DOM is updated. It can also be referred to as `loading states`.
 
 Therefore, Update the `task.html` with the following code, just before the `ul` tag that loads all `tasks`:
 
@@ -406,7 +406,7 @@ Also, update the `Add Tasks` button like so:
 
 **What's Happening Here?**
 
-Unicorn as the `unicorn:loading` attribute, which only is visible when an operation is in process. Here, a spinner would be shown whenever the `add_task` method is in action.
+Unicorn has the `unicorn:loading` attribute, which only is visible when an operation is in process. Here, a spinner would be shown whenever the `add_task` method is in action.
 
 ## Conclusion
 
