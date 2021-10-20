@@ -137,8 +137,8 @@ Update your tasks' template `index.html` file:
 
 ### Explaining the Code
 
-1. You added the `{% load unicorn %}` tag to the top of your `index.html` template, this is required.
-2. You also added the `{% unicorn_scripts %}` tag, also required.
+1. You added the `{% load unicorn %}` tag to the top of your `index.html` template, this is required to tell the template engine to use the files in the unicorn folder in this template.
+2. You also added the `{% unicorn_scripts %}` tag, also required to load the required `scripts` for unicorn to work.
 
 > Note that to follow best practices of security in Django, Unicorn required a `CSRF_TOKEN` to be added on any page that has a component.
 
@@ -157,6 +157,8 @@ $ docker-compose exec web python manage.py startunicorn tasks task
 In this command, you're telling Unicorn to create a `task` component inside the `tasks` application. Therefore, Unicorn will create for you two directories called `components` and `templates` with some boilerplate code.
 
 TODO: what are components in this context?
+
+Components are not specific to an app in Django, instead, it can be reused in any application within a Django project by simply placing it in any template `({% unicorn 'task' %})`. The purpose of creating a component is that it provides us with interactive functionality not available by default in Django.
 
 TODO: in general, how do unicorn's constructs relate back to Django? Is a component akin to an app?
 
@@ -216,7 +218,7 @@ Inside the `task.html`, update it with the following code:
 
 1. You are loading all tasks from your database inside this HTML file.
 1. `u:model` which is short for `unicorn:model` both are allowed, is what ties the input to the backend component. Therefore, the attribute passed into the `u:model` refers to a property in the component class.
-1. The `defer` modifier is used on the `u:model` attribute to prevent an AJAX call on every change (this can be beneficial).
+1. The `defer` modifier is used on the `u:model` attribute to prevent an AJAX call on every change of the input field, this is useful if you don't want unicorn to make a `POST` request every time the `title` field changes, thereby preventing updates from happening until when an action is fired, which in this case could be the `add_tasks` action.
 1. Take note of the `Add Tasks` button with an attribute `u:click`, which tells `unicorn` to bind the `add_tasks` backend method to the click browser event. It also has a `prevent` modifier, to prevent page reload after the form submission.
 1. Also, the `Delete Tasks` button tells `unicorn` to bind the `delete_tasks` backend method. You also passed the task `id` to the `delete_task` function to uniquely identify each task.
 
@@ -269,7 +271,7 @@ Once done, navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to ensur
 
 Try adding and deleting some tasks.
 
-TODO: not working on my end. in teh console, i see `GET http://127.0.0.1:8000/static/unicorn/js/unicorn.js net::ERR_ABORTED 404 (Not Found)`
+TODO: not working on my end. in teh console, i see `GET http://127.0.0.1:8000/static/unicorn/js/unicorn.js net::ERR_ABORTED 404 (Not Found)` (Fixed, sorry, this was missing in the settings file 'django.contrib.staticfiles',)
 
 ## Previewing and Updating Tasks
 
